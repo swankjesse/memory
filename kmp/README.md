@@ -1,0 +1,7 @@
+
+# Android
+
+```
+./gradlew installDebug
+```
+
