@@ -2,7 +2,7 @@ import Shared
 import SwiftUI
 
 struct NearbyGatorsView: View {
-    @ObservedObject var nearbyGatorsObservableObject: NearbyGatorsObservableObject
+    @ObservedObject var nearbyGatorsContent: NearbyGatorsContent
 
     @Binding var showNearbyGators: Bool
 
@@ -10,11 +10,11 @@ struct NearbyGatorsView: View {
 
     var body: some View {
         VStack(alignment: .center) {
-            List(nearbyGatorsObservableObject.nearbyGators, id: \.name) { nearbyGator in
+            List(nearbyGatorsContent.nearbyGators, id: \.name) { nearbyGator in
                 HStack {
                     Text(nearbyGator.name)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text(String(format: "%.2f", nearbyGator.distance))
+                    Text(String(format: "%.2f m", nearbyGator.distance))
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -31,4 +31,3 @@ struct NearbyGatorsView: View {
         }
     }
 }
-

@@ -8,20 +8,18 @@ struct HomeView: View {
     @State private var showNearbyGators: Bool = false
 
     var body: some View {
-        if (showNearbyGators) {
+        Button(
+            action: {
+                showNearbyGators.toggle()
+            },
+            label: {
+                Text("Show Nearby Gators")
+            }
+        )
+        .sheet(isPresented: $showNearbyGators) {
             NearbyGatorsView(
-                nearbyGatorsObservableObject: NearbyGatorsObservableObject(gatorsService: gatorsService),
+                nearbyGatorsContent: NearbyGatorsContent(gatorsService: gatorsService),
                 showNearbyGators: $showNearbyGators
-            )
-
-        } else {
-            Button(
-                action: {
-                    showNearbyGators.toggle()
-                },
-                label: {
-                    Text("Show Nearby Gators")
-                }
             )
         }
     }
