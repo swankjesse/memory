@@ -16,11 +16,22 @@ struct HomeView: View {
                 Text("Show Nearby Gators")
             }
         )
+        .padding()
         .sheet(isPresented: $showNearbyGators) {
             NearbyGatorsView(
                 nearbyGatorsContent: NearbyGatorsContent(gatorsService: gatorsService),
                 showNearbyGators: $showNearbyGators
             )
         }
+
+        Button(
+            action: {
+                Memory().aggressiveKotlinGc()
+            },
+            label: {
+                Text("Force GC")
+            }
+        )
+        .padding()
     }
 }
