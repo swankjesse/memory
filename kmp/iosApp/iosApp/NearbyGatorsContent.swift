@@ -1,21 +1,29 @@
 import Shared
 import SwiftUI
 
-class NearbyGatorsContent: ObservableObject, GatorsServiceListener {
-    let gatorsService: GatorsService
+class NearbyGatorsContent: ObservableObject {
+    private let gatorsService: GatorsService
+
+    private let listener: Listener
 
     @Published var nearbyGators: [NearbyGator] = []
 
     init(gatorsService: GatorsService) {
         self.gatorsService = gatorsService
-        gatorsService.addListener(listener: self)
+        self.listener = Listener()
+        self.listener.content = self
+        gatorsService.addListener(listener: listener)
     }
 
-    func onGators(nearbyGators: [NearbyGator]) {
-        self.nearbyGators = nearbyGators
+    deinit {
+        gatorsService.removeListener(listener: listener)
     }
 
-    func close() {
-        gatorsService.removeListener(listener: self)
+    private class Listener : GatorsServiceListener {
+        weak var content: NearbyGatorsContent? = nil
+
+        func onGators(nearbyGators: [NearbyGator]) {
+            content?.nearbyGators = nearbyGators
+        }
     }
 }
